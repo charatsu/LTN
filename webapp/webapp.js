@@ -21,12 +21,12 @@ angular.module('myApp', [
     //cài đặt một số tham số test chơi
 	//dùng để đặt các giá trị mặc định
     $scope.CamBienNhiet = "Không biết nữa ahihi, chưa thấy có thằng nào cập nhập hết";
-    $scope.leds_status = [1, 1, 1]
+    $scope.leds_status = [1, 1]
 	
 	////Khu 2 -- Cài đặt các sự kiện khi tương tác với người dùng
 	//các sự kiện ng-click, nhấn nút
 	$scope.updateSensor  = function() {
-		mySocket.emit("HOT")
+		mySocket.emit("TEMP")
 	}
 	
 	$scope.changeLED = function() {
@@ -40,8 +40,9 @@ angular.module('myApp', [
 	
 	////Khu 3 -- Nhận dữ liệu từ Arduno gửi lên (thông qua ESP8266 rồi socket server truyền tải!)
 	//các sự kiện từ Arduino gửi lên (thông qua esp8266, thông qua server)
-	mySocket.on('HOT', function(json) {
-		$scope.CamBienNhiet = (json.digital == 1) ? "Không nóng" : "Quá nóng"
+	mySocket.on('TEMP', function(json) {
+		$scope.CamBienNhiet = json.digital;
+		$scope.TrangThai = json.message;
 	})
 	//Khi nhận được lệnh LED_STATUS
 	mySocket.on('LED_STATUS', function(json) {
@@ -54,7 +55,7 @@ angular.module('myApp', [
 	//// Khu 4 -- Những dòng code sẽ được thực thi khi kết nối với Arduino (thông qua socket server)
 	mySocket.on('connect', function() {
 		console.log("connected")
-		mySocket.emit("HOT") //Cập nhập trạng thái nhiệt
+		mySocket.emit("TEMP") //Cập nhập trạng thái nhiệt
 	})
 		
 });
