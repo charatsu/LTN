@@ -20,7 +20,8 @@ angular.module('myApp', [
 	////Khu 1 -- Khu cài đặt tham số 
     //cài đặt một số tham số test chơi
 	//dùng để đặt các giá trị mặc định
-    $scope.CamBienNhiet = "Không biết nữa ahihi, chưa thấy có thằng nào cập nhập hết";
+	$scope.CamBienNhiet = "???";
+	$scope.TrangThai="Chưa cập nhật";
     $scope.leds_status = [1, 1]
 	
 	////Khu 2 -- Cài đặt các sự kiện khi tương tác với người dùng
